@@ -1,0 +1,70 @@
+<div class="row" *ngIf="(listItems$ | async) as listItems">
+
+  <div class="col-lg-6 col-md-12">
+    <ng-container *ngIf="listItems.length > 0; else noRecords">
+      <table class="table table-bordered table-responsive">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Task name</th>
+            <th scope="col">Status</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of listItems; let i = index">
+            <th scope="row">{{i + 1}}</th>
+            <td class="task-name">{{item.name}}</td>
+            <td>{{item.statusLabel}}</td>
+            <td>
+              <button type="button" class="btn btn-primary" (click)="setEditForm(item)" data-bs-toggle="modal"
+                data-bs-target="#exampleModal">
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+              </button>
+              <button type="button" class="btn btn-primary" (click)="deleteItem(item.id)">
+                <i class="fa fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-container>
+    <ng-template #noRecords>
+      <div class="alert alert-info" role="alert">
+        Tasks not added to lists!
+      </div>
+    </ng-template>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Update task!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="editTaskForm">
+          <div class="row">
+            <div class="col">
+              <input type="text" class="form-control" placeholder="Task name" formControlName="taskName">
+            </div>
+            <div class="col">
+              <select class="form-select" formControlName="taskStatus">
+                <option *ngFor="let opt of listOptions$ |async;" [value]="opt.key">{{opt.label}}</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button [disabled]="editTaskForm.invalid" type="button" data-bs-dismiss="modal" class="btn btn-primary"
+          (click)="updateItem()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
