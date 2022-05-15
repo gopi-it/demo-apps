@@ -1,6 +1,7 @@
 import { createReducer, on } from "@ngrx/store";
+
+import { ToDoList } from "../app.state";
 import { addListItem, removeListItem, updateListItem } from "../actions/my-list.action";
-import { AppState, ToDoList } from "../app.state";
 
 
 // Value of initial state to be present in store
@@ -15,9 +16,9 @@ const defaultState: ToDoList = {
 };
 
 export const listItemReducer = createReducer(
-  // assigning default value for state
+  // Assigning default value for state
   defaultState,
-  // Adding a new Item to state for addListItem action
+  // Adding a new item to state using addListItem action
   on(addListItem, (state, payload) => {
     const { name, status } = payload;
 
@@ -32,7 +33,7 @@ export const listItemReducer = createReducer(
       }],
     }
   }),
-  // Deleting an item from state for removeListItem action
+  // Deleting an item from state using removeListItem action
   on(removeListItem, (state, { id }) => {
     const listItems = state.listItems.filter(listItem => {
       return listItem.id !== id
@@ -42,6 +43,7 @@ export const listItemReducer = createReducer(
       listItems
     }
   }),
+  // Updating an item present in state using updateListItem action
   on(updateListItem, (state, payload) => {
     const id = payload.id;
     const listItems = state.listItems.map(task => {

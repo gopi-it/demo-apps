@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+
 import { Store } from '@ngrx/store';
 
 import { AppState, ListItem } from '../store/app.state';
 import { removeListItem, updateListItem } from '../store/actions/my-list.action';
 import { selectListOptions, selectListValues } from '../store/selectors/my-list.selector';
-import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-display-list',
@@ -28,6 +29,7 @@ export class DisplayListComponent {
   ) { }
 
   public deleteItem(taskId: number): void {
+    // Dispatching action to delete task in store
     this.store.dispatch(removeListItem({
       id: taskId
     }));
@@ -43,6 +45,7 @@ export class DisplayListComponent {
 
   public updateItem(): void {
     const taskItem = this.editTaskForm.value;
+    // Dispatching action to update task in store
     this.store.dispatch(updateListItem({
       id: taskItem.taskId,
       name: taskItem.taskName,

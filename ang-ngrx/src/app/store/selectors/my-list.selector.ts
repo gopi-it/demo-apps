@@ -1,6 +1,7 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { ListStatusOption } from "src/app/types/todo-list.type";
-import { AppState, ToDoList } from "../app.state";
+
+import { ToDoList } from "../app.state";
+import { ListStatusOption } from "../../types/todo-list.type";
 
 
 export const selectToDoList = createFeatureSelector<ToDoList>('toDoList');

@@ -5,11 +5,11 @@ import {
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
-import { Store } from '@ngrx/store';
 import { tap } from 'rxjs';
+import { Store } from '@ngrx/store';
 
-import { addListItem } from '../store/actions/my-list.action';
 import { AppState } from '../store/app.state';
+import { addListItem } from '../store/actions/my-list.action';
 import { selectListOptions } from '../store/selectors/my-list.selector';
 
 @Component({
