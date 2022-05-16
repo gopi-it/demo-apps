@@ -17,7 +17,7 @@
             <td class="task-name">{{item.name}}</td>
             <td>{{item.statusLabel}}</td>
             <td>
-              <button type="button" class="btn btn-primary" (click)="setEditForm(item)" data-bs-toggle="modal"
+              <button type="button" class="btn btn-primary" (click)="setEditForm(item, content)" data-bs-toggle="modal"
                 data-bs-target="#exampleModal">
                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
               </button>
@@ -38,33 +38,27 @@
 </div>
 
 
-<!-- Modal popup for editing task -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Update task!</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="editTaskForm">
-          <div class="row">
-            <div class="col">
-              <input type="text" class="form-control" placeholder="Task name" formControlName="taskName">
-            </div>
-            <div class="col">
-              <select class="form-select" formControlName="taskStatus">
-                <option *ngFor="let opt of listOptions$ |async;" [value]="opt.key">{{opt.label}}</option>
-              </select>
-            </div>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button [disabled]="editTaskForm.invalid" type="button" data-bs-dismiss="modal" class="btn btn-primary"
-          (click)="updateItem()">Save changes</button>
-      </div>
-    </div>
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Update task!</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
   </div>
-</div>
+  <div class="modal-body">
+    <form [formGroup]="editTaskForm">
+      <div class="row">
+        <div class="col">
+          <input type="text" class="form-control" placeholder="Task name" formControlName="taskName">
+        </div>
+        <div class="col">
+          <select class="form-select" formControlName="taskStatus">
+            <option *ngFor="let opt of listOptions$ |async;" [value]="opt.key">{{opt.label}}</option>
+          </select>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" [disabled]="editTaskForm.invalid"
+      (click)="updateItem(modal)">Save</button>
+  </div>
+</ng-template>

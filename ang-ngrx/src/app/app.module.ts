@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { StoreModule } from '@ngrx/store';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { DisplayListComponent } from './display-list/display-list.component';
@@ -21,7 +22,8 @@ import { listItemReducer } from './store/reducers/my-list.reducer';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({ toDoList: listItemReducer })
+    NgbModule,
+    StoreModule.forRoot({ toDoList: listItemReducer }),
   ],
   providers: [],
   bootstrap: [AppComponent]

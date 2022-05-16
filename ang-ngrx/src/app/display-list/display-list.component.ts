@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { AppState, ListItem } from '../store/app.state';
 import { removeListItem, updateListItem } from '../store/actions/my-list.action';
 import { selectListOptions, selectListValues } from '../store/selectors/my-list.selector';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-display-list',
@@ -17,6 +18,7 @@ export class DisplayListComponent {
   public listItems$ = this.store.select(selectListValues);
   public listOptions$ = this.store.select(selectListOptions);
 
+
   public editTaskForm = this.fb.group({
     taskId: [null, Validators.required],
     taskName: [null, Validators.required],
@@ -25,7 +27,8 @@ export class DisplayListComponent {
 
   constructor(
     private readonly store: Store<AppState>,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private modalService: NgbModal
   ) { }
 
   public deleteItem(taskId: number): void {
@@ -35,15 +38,16 @@ export class DisplayListComponent {
     }));
   }
 
-  public setEditForm(option: ListItem): void {
+  public setEditForm(option: ListItem, content: any): void {
     this.editTaskForm.setValue({
       taskId: option.id,
       taskName: option.name,
       taskStatus: option.status
     })
+    this.modalService.open(content);
   }
 
-  public updateItem(): void {
+  public updateItem(modal: any): void {
     const taskItem = this.editTaskForm.value;
     // Dispatching action to update task in store
     this.store.dispatch(updateListItem({
@@ -51,5 +55,6 @@ export class DisplayListComponent {
       name: taskItem.taskName,
       status: taskItem.taskStatus
     }));
+    modal.dismiss();
   }
 }
