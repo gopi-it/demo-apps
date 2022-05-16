@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
 import { Store } from '@ngrx/store';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppState, ListItem } from '../store/app.state';
 import { removeListItem, updateListItem } from '../store/actions/my-list.action';
 import { selectListOptions, selectListValues } from '../store/selectors/my-list.selector';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-display-list',
